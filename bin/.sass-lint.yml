@@ -1,0 +1,11 @@
+files:
+  include: './src/scss/**/*.scss'
+
+options:
+  formatter: stylish
+
+rules:
+  indentation:
+    - 1
+    -
+      size: 'tab'

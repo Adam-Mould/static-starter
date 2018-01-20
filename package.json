@@ -1,0 +1,50 @@
+{
+  "name": "static-starter",
+  "version": "1.0.0",
+  "description": "Static starter files",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run js:prod && npm run css:prod",
+    "start": "concurrently -k -r \"npm run js:dev\" \"npm run css:watch\"",
+    "precss": "sass-lint --config bin/.sass-lint.yml -v -q",
+    "css": "node-sass-chokidar src/scss/ -o dist --source-map true",
+    "css:dev": "npm run css",
+    "postcss:dev": "npm run css:postcss -- --env development",
+    "css:prod": "npm run css",
+    "postcss:prod": "npm run css:postcss -- --env production",
+    "css:watch": "chokidar src/scss/**/*.scss -c 'npm run css:dev' --silent",
+    "css:postcss": "postcss --config bin/postcss.config.js dist/*.css -o dist/*.css",
+    "js:dev": "webpack --config bin/webpack.dev.js",
+    "js:prod": "webpack --config bin/webpack.prod.js"
+  },
+  "author": "Adam Mould",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.38",
+    "@babel/preset-env": "^7.0.0-beta.38",
+    "autoprefixer": "^7.2.5",
+    "babel-loader": "8.0.0-beta.0",
+    "chokidar-cli": "^1.2.0",
+    "clean-webpack-plugin": "^0.1.17",
+    "concurrently": "^3.5.1",
+    "cssnano": "^3.10.0",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "glob": "^7.1.2",
+    "json-loader": "^0.5.7",
+    "node-sass-chokidar": "^0.0.3",
+    "postcss": "^6.0.16",
+    "postcss-cli": "^4.1.1",
+    "sass-lint": "^1.12.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "^3.10.0",
+    "webpack-merge": "^4.1.1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.0",
+    "popper.js": "^1.12.9"
+  }
+}
