@@ -1,7 +1,16 @@
+@import "~reset-css/sass/_reset.scss";
+
 html {
-	font-size: 20px;
+  box-sizing: border-box;
+  font-size: 62.5%;
 }
 
 body {
-	display: flex;
+  font-size: 1.6rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
