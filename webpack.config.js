@@ -4,20 +4,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const devMode = process.env.NODE_ENV !== "production";
 
-const postcssPlugins = [require("postcss-preset-env")()];
-if (!devMode) {
-  postcssPlugins.push(require("css-mqpacker")({ sort: true }));
-  postcssPlugins.push(require("pixrem")());
-  postcssPlugins.push(require("cssnano")());
-}
-
 module.exports = {
   entry: "./src/js/index.js",
   output: {
     filename: "index.js",
-    path: path.resolve(__dirname + "/dist")
+    path: path.resolve(__dirname, "dist")
   },
-  stats: { children: false },
+  devServer: {
+    contentBase: path.resolve(__dirname),
+    publicPath: "/dist/"
+  },
   module: {
     rules: [
       {
@@ -44,7 +40,7 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              plugins: () => postcssPlugins
+              plugins: getPostCssPlugins()
             }
           },
           "sass-loader"
@@ -55,5 +51,19 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(["dist"]),
     new MiniCssExtractPlugin({ filename: "style.css" })
-  ]
+  ],
+  stats: {
+    children: false
+  }
 };
+
+function getPostCssPlugins() {
+  const postcssPlugins = [require("postcss-preset-env")()];
+  if (!devMode) {
+    postcssPlugins.push(require("css-mqpacker")({ sort: true }));
+    postcssPlugins.push(require("pixrem")());
+    postcssPlugins.push(require("cssnano")());
+  }
+
+  return postcssPlugins;
+}
